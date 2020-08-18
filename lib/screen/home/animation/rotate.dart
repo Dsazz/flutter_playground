@@ -1,21 +1,23 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fplayground/animation/base_animation.dart';
+
+import 'base_animation.dart';
 
 class RotateAnimation extends StatefulWidget implements BaseAnimation {
-  _RotateAnimationState state;
+  VoidCallback _onPressed;
 
   @override
-  VoidCallback onPressed() {
-    return state.onPressed;
+  void onPressed() {
+    return _onPressed();
   }
 
   @override
   _RotateAnimationState createState() {
-    this.state = _RotateAnimationState();
+    _RotateAnimationState state = _RotateAnimationState();
+    _onPressed = state.onPressed;
 
-    return this.state;
+    return state;
   }
 }
 
@@ -33,13 +35,8 @@ class _RotateAnimationState extends State<RotateAnimation>
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300))
-          ..addStatusListener((status) {
-            debugPrint("-------> $status");
-          })
           ..addListener(() {
-            setState(() {
-              debugPrint("Curved: ${_controller.value}");
-            });
+            setState(() {});
           });
 
     _animation = Tween(begin: 0.0, end: pi)
@@ -66,7 +63,6 @@ class _RotateAnimationState extends State<RotateAnimation>
         angle: _animation.value,
         child: child,
       ),
-//  child:
     );
   }
 }

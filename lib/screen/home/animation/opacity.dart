@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:fplayground/animation/base_animation.dart';
+
+import 'base_animation.dart';
 
 class OpacityAnimation extends StatefulWidget implements BaseAnimation {
-  _OpacityAnimationState state;
+  VoidCallback _onPressed;
 
   @override
-  VoidCallback onPressed() {
-    return state.onPressed;
+  void onPressed() {
+    return _onPressed();
   }
 
   @override
   _OpacityAnimationState createState() {
-    this.state = _OpacityAnimationState();
+    _OpacityAnimationState state = _OpacityAnimationState();
+    _onPressed = state.onPressed;
 
-    return this.state;
+    return state;
   }
 }
 

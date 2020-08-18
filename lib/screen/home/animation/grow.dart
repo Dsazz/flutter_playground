@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:fplayground/animation/base_animation.dart';
+
+import 'base_animation.dart';
 
 class GrowAnimation extends StatefulWidget implements BaseAnimation {
-  GrowAnimationState state;
+  VoidCallback _onPressed;
 
   @override
-  VoidCallback onPressed() {
-    print("CLICKED");
-    print("${state.onPressed}");
-    return this.state.onPressed;
+  void onPressed() {
+    return _onPressed();
   }
 
   @override
-  GrowAnimationState createState() {
-    this.state = GrowAnimationState();
+  _GrowAnimationState createState() {
+    _GrowAnimationState state = _GrowAnimationState();
+    _onPressed = state.onPressed;
 
     return state;
   }
 }
 
-class GrowAnimationState extends State<GrowAnimation>
+class _GrowAnimationState extends State<GrowAnimation>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
@@ -30,7 +30,6 @@ class GrowAnimationState extends State<GrowAnimation>
 
     _controller =
         AnimationController(duration: const Duration(seconds: 1), vsync: this)
-          ..addStatusListener((state) => print('$state'))
           ..addListener(() {
             setState(() {});
           });
@@ -39,12 +38,11 @@ class GrowAnimationState extends State<GrowAnimation>
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _controller?.dispose();
   }
 
   void onPressed() {
-    print("CLICKED INTERNAL");
     _controller.isCompleted ? _controller.reverse() : _controller.forward();
   }
 
