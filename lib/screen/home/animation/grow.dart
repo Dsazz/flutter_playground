@@ -28,11 +28,12 @@ class _GrowAnimationState extends State<GrowAnimation>
   void initState() {
     super.initState();
 
-    _controller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this)
-          ..addListener(() {
-            setState(() {});
-          });
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..addListener(() {
+        setState(() {});
+      });
     _animation = Tween<double>(begin: 0, end: 100).animate(_controller);
   }
 

@@ -47,8 +47,8 @@ class WaveAnimationState extends State<WaveAnimation>
     super.initState();
 
     _controller = AnimationController(
-      duration: Duration(milliseconds: (5000 / speed).round()),
       vsync: this,
+      duration: Duration(milliseconds: (5000 / speed).round()),
     )..addListener(() {
         setState(() {});
       });
