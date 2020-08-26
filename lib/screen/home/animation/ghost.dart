@@ -203,8 +203,8 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
   void initState() {
     super.initState();
     _controller = new AnimationController(
-      duration: const Duration(seconds: 3),
       vsync: this,
+      duration: const Duration(seconds: 3),
     );
 
     _animation =
@@ -214,8 +214,8 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
           });
 
     _bouncingController = new AnimationController(
-      duration: const Duration(milliseconds: 1000),
       vsync: this,
+      duration: const Duration(milliseconds: 1000),
     );
 
     _bouncingAnimation = Tween(begin: 0.0, end: 20.0).animate(

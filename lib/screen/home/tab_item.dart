@@ -17,6 +17,7 @@ class TabItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
+          height: 170.0,
           child: Row(
             children: <Widget>[
               Expanded(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fplayground/notifier/theme.dart';
 import 'package:fplayground/screen/home/animation/ghost.dart';
+import 'package:fplayground/screen/home/animation/star_buttons.dart';
 import 'package:fplayground/screen/home/animation/wave.dart';
 import 'package:fplayground/screen/home/tab_item.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'animation/opacity.dart';
 import 'animation/rotate.dart';
 
 final tabAnimations = <StatefulWidget>[
+  AnimatedStarButtonsPainter(),
   AnimatedGhostPainter(),
   GrowAnimation(),
   OpacityAnimation(),
@@ -30,8 +32,8 @@ class Home extends StatelessWidget {
           title: const Text("PLAYGROUND"),
           bottom: const TabBar(
             tabs: [
-              Tab(icon: Icon(Icons.accessible_forward)),
-              Tab(icon: Icon(Icons.ac_unit))
+              Tab(icon: Icon(Icons.ondemand_video)),
+              Tab(icon: Icon(Icons.video_library))
             ],
           ),
         ),

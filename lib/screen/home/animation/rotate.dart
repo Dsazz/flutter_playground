@@ -33,11 +33,12 @@ class _RotateAnimationState extends State<RotateAnimation>
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300))
-          ..addListener(() {
-            setState(() {});
-          });
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    )..addListener(() {
+        setState(() {});
+      });
 
     _animation = Tween(begin: 0.0, end: pi)
         .chain(CurveTween(curve: Curves.easeInToLinear))

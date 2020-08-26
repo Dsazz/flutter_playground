@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fplayground/config/locator.dart';
 import 'package:fplayground/screen/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,9 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  setupLocator();
+
   runApp(MyApp());
 }
 
