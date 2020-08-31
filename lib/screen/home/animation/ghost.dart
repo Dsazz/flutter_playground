@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:flatter_playground/service/audio_player.dart';
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/screen/home/animation/base_animation.dart';
-import 'package:fplayground/service/audio_player.dart';
-import 'package:fplayground/util/util.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_drawing/path_drawing.dart';
+
+import 'base_animation.dart';
 
 class GhostPainter extends CustomPainter {
   final Animation<double> _animation;
@@ -184,7 +185,7 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
   AudioPlayerController _player = GetIt.I<AudioPlayerController>();
 
   void onPressed() {
-    _player.play("sound/ghost.mp3");
+    _player.play("ghost");
 
     if (_bouncingController.isAnimating) _bouncingController.reset();
     _controller.isCompleted ? _controller.reverse() : _controller.forward();
@@ -221,7 +222,7 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
 
   @override
   void dispose() {
-    _player.stopSound();
+    _player.stop();
 
     _controller?.dispose();
     _bouncingController?.dispose();

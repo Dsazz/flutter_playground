@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fplayground/config/locator.dart';
-import 'package:fplayground/screen/home/home.dart';
 import 'package:provider/provider.dart';
 
+import 'config/locator.dart';
+import 'config/router.dart';
 import 'notifier/theme.dart';
 
 void main() {
@@ -30,10 +30,12 @@ class MyApp extends StatelessWidget {
       //calls notifyListeners()
       child: Consumer<ThemeNotifier>(builder: (context, themeNotifier, _) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: themeNotifier.getTheme(),
-            title: 'Playground application',
-            home: Home());
+          debugShowCheckedModeBanner: false,
+          theme: themeNotifier.getTheme(),
+          title: 'Playground application',
+          initialRoute: Routers.SPLASH_SCREEN,
+          routes: Routers.init(context),
+        );
       }),
     );
   }

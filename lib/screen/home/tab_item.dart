@@ -1,6 +1,6 @@
+import 'package:flatter_playground/component/button/play.dart';
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/component/button/play.dart';
-import 'package:fplayground/util/util.dart';
 
 import 'animation/base_animation.dart';
 

@@ -1,32 +1,15 @@
-import 'dart:io' show Platform;
-
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
-
-void audioPlayerHandler(AudioPlayerState value) => print('state => $value');
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class AudioPlayerController {
-  static AudioPlayer _audioPlayer = AudioPlayer();
-  static AudioCache _audioCache = AudioCache();
+  static AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.newPlayer();
 
-  AudioPlayerController() {
-    _audioCache.loadAll([
-      "sound/star_1.mp3",
-      "sound/star_2.mp3",
-      "sound/star_3.mp3",
-      "sound/ghost.mp3",
-    ]);
+  Future<void> play(String sound) async {
+    await _audioPlayer.open(Audio("assets/sound/$sound.mp3"));
+    _audioPlayer.setVolume(1);
+    await _audioPlayer.play();
   }
 
-  void play(String sound) {
-    if (Platform.isIOS) {
-      _audioPlayer.monitorNotificationStateChanges(audioPlayerHandler);
-    }
-
-    _audioCache.play(sound, mode: PlayerMode.LOW_LATENCY);
-  }
-
-  void stopSound() async {
+  void stop() async {
     await _audioPlayer.stop();
   }
 }

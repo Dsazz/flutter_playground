@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:flatter_playground/service/audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/service/audio_player.dart';
 import 'package:get_it/get_it.dart';
 
 typedef StarActionCallback = void Function(Offset currPnt);
@@ -108,7 +108,7 @@ class AnimatedStarButtonState extends State<StatefulWidget>
   }
 
   void _doAction() {
-    player.play("sound/${key.value}.mp3");
+    player.play(key.value);
 
     controller.reset();
     controller.forward();

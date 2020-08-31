@@ -1,5 +1,5 @@
+import 'package:flatter_playground/config/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/config/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeNotifier with ChangeNotifier {

@@ -1,14 +1,14 @@
+import 'package:flatter_playground/notifier/theme.dart';
+import 'package:flatter_playground/screen/home/tab_item.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/notifier/theme.dart';
-import 'package:fplayground/screen/home/animation/ghost.dart';
-import 'package:fplayground/screen/home/animation/star_buttons.dart';
-import 'package:fplayground/screen/home/animation/wave.dart';
-import 'package:fplayground/screen/home/tab_item.dart';
 import 'package:provider/provider.dart';
 
+import 'animation/ghost.dart';
 import 'animation/grow.dart';
 import 'animation/opacity.dart';
 import 'animation/rotate.dart';
+import 'animation/star_buttons.dart';
+import 'animation/wave.dart';
 
 final tabAnimations = <StatefulWidget>[
   AnimatedStarButtonsPainter(),

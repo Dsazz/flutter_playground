@@ -1,14 +1,14 @@
 import 'dart:ui' as ui;
 
+import 'package:flatter_playground/util/path_metric_helper.dart';
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fplayground/screen/home/animation/base_animation.dart';
-import 'package:fplayground/util/path_metric_helper.dart';
-import 'package:fplayground/util/util.dart';
 
 import '_star_buttons/star_button.dart';
 import '_star_buttons/star_line_painter.dart';
 import '_star_buttons/star_line_path.dart';
+import 'base_animation.dart';
 
 class AnimatedStarButtonsPainter extends StatefulWidget
     implements BaseAnimation {

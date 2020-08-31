@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:flatter_playground/screen/home/animation/_star_buttons/star_button.dart';
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/screen/home/animation/_star_buttons/star_button.dart';
-import 'package:fplayground/util/util.dart';
 
 class StarLinePath {
   static List<Offset> _calcWrapCirclePoints(

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:flatter_playground/util/path_metric_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/util/path_metric_helper.dart';
 
 class StarLinePainter extends CustomPainter {
   Animation<double> animation;
