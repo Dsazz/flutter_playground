@@ -1,22 +1,19 @@
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
 
 import 'base_animation.dart';
 
 class GrowAnimation extends StatefulWidget implements BaseAnimation {
-  VoidCallback _onPressed;
+  GrowAnimation({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {
-    return _onPressed();
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<_GrowAnimationState>(state).onPressed();
   }
 
   @override
-  _GrowAnimationState createState() {
-    _GrowAnimationState state = _GrowAnimationState();
-    _onPressed = state.onPressed;
-
-    return state;
-  }
+  _GrowAnimationState createState() => _GrowAnimationState();
 }
 
 class _GrowAnimationState extends State<GrowAnimation>

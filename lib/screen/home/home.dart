@@ -10,13 +10,21 @@ import 'animation/rotate.dart';
 import 'animation/star_buttons.dart';
 import 'animation/wave.dart';
 
+GlobalKey _starBtn = GlobalKey();
+GlobalKey _ghostBtn = GlobalKey();
+GlobalKey _growBtn = GlobalKey();
+GlobalKey _opacityBtn = GlobalKey();
+GlobalKey _rotateBtn = GlobalKey();
+GlobalKey _waveBtn = GlobalKey();
+
 final tabAnimations = <StatefulWidget>[
-  AnimatedStarButtonsPainter(),
-  AnimatedGhostPainter(),
-  GrowAnimation(),
-  OpacityAnimation(),
-  RotateAnimation(),
+  AnimatedStarButtonsPainter(key: _starBtn),
+  AnimatedGhostPainter(key: _ghostBtn),
+  GrowAnimation(key: _growBtn),
+  OpacityAnimation(key: _opacityBtn),
+  RotateAnimation(key: _rotateBtn),
   WaveAnimation(
+    key: _waveBtn,
     height: 150,
     speed: 1.0,
   ),

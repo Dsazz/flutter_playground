@@ -1,22 +1,19 @@
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
 
 import 'base_animation.dart';
 
 class OpacityAnimation extends StatefulWidget implements BaseAnimation {
-  VoidCallback _onPressed;
+  OpacityAnimation({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {
-    return _onPressed();
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<_OpacityAnimationState>(state).onPressed();
   }
 
   @override
-  _OpacityAnimationState createState() {
-    _OpacityAnimationState state = _OpacityAnimationState();
-    _onPressed = state.onPressed;
-
-    return state;
-  }
+  _OpacityAnimationState createState() => _OpacityAnimationState();
 }
 
 class _OpacityAnimationState extends State<OpacityAnimation> {

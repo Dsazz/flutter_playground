@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:flatter_playground/util/path_metric_helper.dart';
 import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 import '_star_buttons/star_button.dart';
 import '_star_buttons/star_line_painter.dart';
@@ -12,20 +11,16 @@ import 'base_animation.dart';
 
 class AnimatedStarButtonsPainter extends StatefulWidget
     implements BaseAnimation {
-  VoidCallback _onPressed;
+  AnimatedStarButtonsPainter({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {
-    return _onPressed();
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<AnimatedStarButtonsState>(state).onPressed();
   }
 
   @override
-  AnimatedStarButtonsState createState() {
-    AnimatedStarButtonsState state = AnimatedStarButtonsState();
-    _onPressed = state.onPressed;
-
-    return state;
-  }
+  AnimatedStarButtonsState createState() => AnimatedStarButtonsState();
 }
 
 class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
@@ -40,10 +35,17 @@ class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
   Size _mainSize;
   Path _path;
 
+  bool _isForward = true;
+
   void onPressed() {
-    _lineController.isCompleted
-        ? _lineController.reverse()
-        : _lineController.forward();
+    if (_lineController.isCompleted) {
+      _isForward = false;
+      _lineController.reverse();
+    } else {
+      _lineController.forward();
+      _isForward = true;
+    }
+    setState(() {});
   }
 
   void _initButtons() {
@@ -52,6 +54,7 @@ class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
     final dx2 = _mainSize.width * 0.39;
     final dx3 = _mainSize.width * 0.68;
 
+    _animatedButtons.clear();
     _animatedButtons.add(AnimatedStarButton(1, Offset(dx1, height)));
     _animatedButtons.add(AnimatedStarButton(2, Offset(dx2, height)));
     _animatedButtons.add(AnimatedStarButton(3, Offset(dx3, height)));
@@ -119,7 +122,8 @@ class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
       icon.size,
     );
 
-    _animatedButtons?.forEach((element) => element.tryDoAction(pos));
+    _animatedButtons
+        ?.forEach((element) => element.tryDoAction(pos, _isForward));
 
     return Positioned(
       top: pos.dy,

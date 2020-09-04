@@ -1,24 +1,21 @@
 import 'dart:math';
 
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
 
 import 'base_animation.dart';
 
 class RotateAnimation extends StatefulWidget implements BaseAnimation {
-  VoidCallback _onPressed;
+  RotateAnimation({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {
-    return _onPressed();
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<_RotateAnimationState>(state).onPressed();
   }
 
   @override
-  _RotateAnimationState createState() {
-    _RotateAnimationState state = _RotateAnimationState();
-    _onPressed = state.onPressed;
-
-    return state;
-  }
+  _RotateAnimationState createState() => _RotateAnimationState();
 }
 
 class _RotateAnimationState extends State<RotateAnimation>

@@ -4,7 +4,7 @@ import 'package:flatter_playground/service/audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-typedef StarActionCallback = void Function(Offset currPnt);
+typedef StarActionCallback = void Function(Offset currPnt, bool isForward);
 
 class AnimatedStarButton extends StatefulWidget {
   static const KEY_PREFIX = "star_";
@@ -14,13 +14,15 @@ class AnimatedStarButton extends StatefulWidget {
   static const double RADIUS_SHIFT = 3;
   static const double SHADOW_SHIFT = SIZE * 0.25;
 
-  Offset actionPoint;
+  final Offset actionPoint;
 
   StarActionCallback _tryDoAction;
 
-  void tryDoAction(Offset currPnt) {
-    if (_tryDoAction == null) return;
-    return _tryDoAction(currPnt);
+  void tryDoAction(Offset currPnt, bool isForward) {
+    if (_tryDoAction == null) {
+      return;
+    }
+    return _tryDoAction(currPnt, isForward);
   }
 
   AnimatedStarButton(int index, Offset actionPoint)
@@ -94,26 +96,32 @@ class AnimatedStarButtonState extends State<StatefulWidget>
     btnAnimation = Tween(begin: 1.0, end: 5.0).animate(btnController);
   }
 
-  bool _shouldDoAction(Offset currPnt) {
-    if (this.actionTaken) {
+  bool _shouldDoAction(Offset currPnt, bool isForward) {
+    if ((isForward && actionTaken) ||
+        (false == isForward && false == actionTaken)) {
       return false;
     }
-    return currPnt == actionPoint || currPnt.dx > actionPoint.dx;
+
+    bool isAfterCurrent = isForward
+        ? (currPnt.dx > actionPoint.dx)
+        : (currPnt.dx > 0 && ((currPnt.dx - actionPoint.dx) <= 0));
+
+    return currPnt == actionPoint || isAfterCurrent;
   }
 
-  void tryDoAction(Offset currPnt) {
-    if (_shouldDoAction(currPnt)) {
-      _doAction();
+  void tryDoAction(Offset currPnt, bool isForward) {
+    if (_shouldDoAction(currPnt, isForward)) {
+      _doAction(isForward);
     }
   }
 
-  void _doAction() {
+  void _doAction(bool isForward) {
     player.play(key.value);
 
     controller.reset();
     controller.forward();
 
-    actionTaken = true;
+    actionTaken = isForward;
   }
 
   @override
@@ -135,30 +143,7 @@ class AnimatedStarButtonState extends State<StatefulWidget>
           onTap: _onTap,
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.amber,
-                  blurRadius: btnAnimation.value,
-                  spreadRadius: btnAnimation.value,
-                )
-              ],
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: const <Widget>[
-                const Positioned(
-                  top: AnimatedStarButton.SHADOW_SHIFT,
-                  left: AnimatedStarButton.SHADOW_SHIFT,
-                  child: Icon(Icons.star, color: Colors.black38),
-                ),
-                const Icon(Icons.star, color: Colors.orange),
-              ],
-            ),
-          ),
+          child: StarButtonBody(btnAnimation: btnAnimation),
         ),
       ),
     );
@@ -173,4 +158,52 @@ class AnimatedStarButtonState extends State<StatefulWidget>
   }
 
   void _onTap() {}
+}
+
+class StarButtonBody extends StatelessWidget {
+  const StarButtonBody({
+    Key key,
+    @required this.btnAnimation,
+  }) : super(key: key);
+
+  final Animation<double> btnAnimation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.amber,
+            blurRadius: btnAnimation.value,
+            spreadRadius: btnAnimation.value,
+          )
+        ],
+      ),
+      child: const StarIcon(),
+    );
+  }
+}
+
+class StarIcon extends StatelessWidget {
+  const StarIcon({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: const <Widget>[
+        const Positioned(
+          top: AnimatedStarButton.SHADOW_SHIFT,
+          left: AnimatedStarButton.SHADOW_SHIFT,
+          child: Icon(Icons.star, color: Colors.black38),
+        ),
+        const Icon(Icons.star, color: Colors.orange),
+      ],
+    );
+  }
 }

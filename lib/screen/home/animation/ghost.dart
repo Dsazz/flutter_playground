@@ -158,20 +158,16 @@ class GhostPainter extends CustomPainter {
 }
 
 class AnimatedGhostPainter extends StatefulWidget implements BaseAnimation {
-  VoidCallback _onPressed;
+  AnimatedGhostPainter({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {
-    return _onPressed();
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<AnimatedGhostPainterState>(state).onPressed();
   }
 
   @override
-  AnimatedGhostPainterState createState() {
-    AnimatedGhostPainterState state = AnimatedGhostPainterState();
-    _onPressed = state.onPressed;
-
-    return state;
-  }
+  AnimatedGhostPainterState createState() => AnimatedGhostPainterState();
 }
 
 class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
@@ -222,8 +218,6 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
 
   @override
   void dispose() {
-    _player.stop();
-
     _controller?.dispose();
     _bouncingController?.dispose();
 

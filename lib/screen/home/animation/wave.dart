@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
 
 import 'base_animation.dart';
@@ -9,13 +10,13 @@ class WaveAnimation extends StatefulWidget implements BaseAnimation {
   final double speed;
   final double offset;
 
-  WaveAnimation({this.height, this.speed, this.offset = 0.0});
-
-  VoidCallback _onPressed;
+  WaveAnimation({GlobalKey key, this.height, this.speed, this.offset = 0.0})
+      : super(key: key);
 
   @override
   void onPressed() {
-    return _onPressed();
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<WaveAnimationState>(state).onPressed();
   }
 
   @override
@@ -25,7 +26,6 @@ class WaveAnimation extends StatefulWidget implements BaseAnimation {
       speed: this.speed,
       offset: this.offset,
     );
-    _onPressed = state.onPressed;
 
     return state;
   }

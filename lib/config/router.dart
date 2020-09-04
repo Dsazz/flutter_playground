@@ -9,8 +9,8 @@ class Routers {
   static Map<String, WidgetBuilder> init(BuildContext context) {
     return {
       SPLASH_SCREEN: (context) => SplashScreen.timed(
-            seconds: 3,
-            navigate: PageRouteBuilder(
+            seconds: 1,
+            route: PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) => Home(),
               transitionDuration: Duration(seconds: 1),
               transitionsBuilder: (_, animation, secAnim, child) {
