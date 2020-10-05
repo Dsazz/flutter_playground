@@ -1,6 +1,7 @@
 # flutter_playground
 
-![Tests status](https://github.com/Dsazz/flutter_playground/workflows/tests/badge.svg) [![codecov](https://codecov.io/gh/Dsazz/flutter_playground/branch/master/graph/badge.svg)](https://codecov.io/gh/Dsazz/flutter_playground)
+![build](https://img.shields.io/github/workflow/status/Dsazz/flutter_playground/tests?style=flat-square)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg?style=flat-square)](https://saythanks.io/to/dsazztazz%40gmail.com)
 
 A new Flutter playground project.
 
