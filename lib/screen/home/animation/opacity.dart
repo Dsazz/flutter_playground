@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'base_animation.dart';
 
 class OpacityAnimation extends StatefulWidget implements BaseAnimation {
-  OpacityAnimation({GlobalKey key}) : super(key: key);
+  const OpacityAnimation({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {

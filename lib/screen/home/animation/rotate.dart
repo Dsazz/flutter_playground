@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'base_animation.dart';
 
 class RotateAnimation extends StatefulWidget implements BaseAnimation {
-  RotateAnimation({GlobalKey key}) : super(key: key);
+  const RotateAnimation({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {

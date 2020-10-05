@@ -8,7 +8,94 @@ import 'package:path_drawing/path_drawing.dart';
 
 import 'base_animation.dart';
 
-class GhostPainter extends CustomPainter {
+class AnimatedGhostPainter extends StatefulWidget implements BaseAnimation {
+  const AnimatedGhostPainter({GlobalKey key}) : super(key: key);
+
+  @override
+  void onPressed() {
+    var state = cast<GlobalKey>(key).currentState;
+    return cast<_AnimatedGhostPainterState>(state).onPressed();
+  }
+
+  @override
+  _AnimatedGhostPainterState createState() => _AnimatedGhostPainterState();
+}
+
+class _AnimatedGhostPainterState extends State<AnimatedGhostPainter>
+    with TickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<double> _animation;
+
+  AnimationController _bouncingController;
+  Animation<double> _bouncingAnimation;
+
+  AudioPlayerController _player = GetIt.I<AudioPlayerController>();
+
+  void onPressed() {
+    _player.play("ghost");
+
+    if (_bouncingController.isAnimating) _bouncingController.reset();
+    _controller.isCompleted ? _controller.reverse() : _controller.forward();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = new AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+
+    _animation =
+        Tween(begin: 0.0, end: _GhostPainter.FULL_CIRCLE).animate(_controller)
+          ..addListener(() {
+            setState(() {});
+          });
+
+    _bouncingController = new AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _bouncingAnimation = Tween(begin: 0.0, end: 20.0).animate(
+      CurvedAnimation(
+        parent: _bouncingController,
+        curve: Curves.easeInOut,
+      ),
+    )..addListener(() {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _bouncingController?.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_animation.isCompleted && _bouncingAnimation.isDismissed) {
+      _bouncingController.forward();
+      _bouncingController.repeat(reverse: true);
+    }
+
+    return Container(
+      margin: EdgeInsets.only(bottom: _bouncingAnimation.value),
+      child: Container(
+        height: 150,
+        child: CustomPaint(
+          size: Size.infinite,
+          foregroundPainter: _GhostPainter(_animation),
+        ),
+      ),
+    );
+  }
+}
+
+class _GhostPainter extends CustomPainter {
   final Animation<double> _animation;
   static const MAX_WIDTH = 266;
 
@@ -17,7 +104,7 @@ class GhostPainter extends CustomPainter {
   static const BOTTOM_SIDES_CIRCLE = 360.0;
   static const FULL_CIRCLE = 450.0;
 
-  GhostPainter(this._animation) : super(repaint: _animation);
+  const _GhostPainter(this._animation) : super(repaint: _animation);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -154,92 +241,5 @@ class GhostPainter extends CustomPainter {
           dashArray: CircularIntervalList<double>(<double>[10, 9]),
         ),
         paint);
-  }
-}
-
-class AnimatedGhostPainter extends StatefulWidget implements BaseAnimation {
-  AnimatedGhostPainter({GlobalKey key}) : super(key: key);
-
-  @override
-  void onPressed() {
-    var state = cast<GlobalKey>(key).currentState;
-    return cast<AnimatedGhostPainterState>(state).onPressed();
-  }
-
-  @override
-  AnimatedGhostPainterState createState() => AnimatedGhostPainterState();
-}
-
-class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
-    with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
-
-  AnimationController _bouncingController;
-  Animation<double> _bouncingAnimation;
-
-  AudioPlayerController _player = GetIt.I<AudioPlayerController>();
-
-  void onPressed() {
-    _player.play("ghost");
-
-    if (_bouncingController.isAnimating) _bouncingController.reset();
-    _controller.isCompleted ? _controller.reverse() : _controller.forward();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = new AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    );
-
-    _animation =
-        Tween(begin: 0.0, end: GhostPainter.FULL_CIRCLE).animate(_controller)
-          ..addListener(() {
-            setState(() {});
-          });
-
-    _bouncingController = new AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-
-    _bouncingAnimation = Tween(begin: 0.0, end: 20.0).animate(
-      CurvedAnimation(
-        parent: _bouncingController,
-        curve: Curves.easeInOut,
-      ),
-    )..addListener(() {
-        setState(() {});
-      });
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    _bouncingController?.dispose();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_animation.isCompleted && _bouncingAnimation.isDismissed) {
-      _bouncingController.forward();
-      _bouncingController.repeat(reverse: true);
-    }
-
-    return Container(
-      margin: EdgeInsets.only(bottom: _bouncingAnimation.value),
-      child: Container(
-        height: 150,
-        child: CustomPaint(
-          size: Size.infinite,
-          foregroundPainter: GhostPainter(_animation),
-        ),
-      ),
-    );
   }
 }

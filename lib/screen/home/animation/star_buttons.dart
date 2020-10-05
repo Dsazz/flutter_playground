@@ -11,19 +11,19 @@ import 'base_animation.dart';
 
 class AnimatedStarButtonsPainter extends StatefulWidget
     implements BaseAnimation {
-  AnimatedStarButtonsPainter({GlobalKey key}) : super(key: key);
+  const AnimatedStarButtonsPainter({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {
     var state = cast<GlobalKey>(key).currentState;
-    return cast<AnimatedStarButtonsState>(state).onPressed();
+    return cast<_AnimatedStarButtonsState>(state).onPressed();
   }
 
   @override
-  AnimatedStarButtonsState createState() => AnimatedStarButtonsState();
+  _AnimatedStarButtonsState createState() => _AnimatedStarButtonsState();
 }
 
-class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
+class _AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
     with TickerProviderStateMixin {
   List<AnimatedStarButton> _animatedButtons = [];
 
@@ -55,9 +55,20 @@ class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
     final dx3 = _mainSize.width * 0.68;
 
     _animatedButtons.clear();
-    _animatedButtons.add(AnimatedStarButton(1, Offset(dx1, height)));
-    _animatedButtons.add(AnimatedStarButton(2, Offset(dx2, height)));
-    _animatedButtons.add(AnimatedStarButton(3, Offset(dx3, height)));
+
+    _animatedButtons
+      ..add(AnimatedStarButton(
+          index: 1,
+          actionPoint: Offset(dx1, height),
+          key: GlobalKey<AnimatedStarButtonState>()))
+      ..add(AnimatedStarButton(
+          index: 2,
+          actionPoint: Offset(dx2, height),
+          key: GlobalKey<AnimatedStarButtonState>()))
+      ..add(AnimatedStarButton(
+          index: 3,
+          actionPoint: Offset(dx3, height),
+          key: GlobalKey<AnimatedStarButtonState>()));
   }
 
   @override
@@ -77,6 +88,7 @@ class AnimatedStarButtonsState extends State<AnimatedStarButtonsPainter>
     });
 
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _setMainSize();
       _initButtons();

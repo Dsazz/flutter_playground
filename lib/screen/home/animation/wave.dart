@@ -10,35 +10,26 @@ class WaveAnimation extends StatefulWidget implements BaseAnimation {
   final double speed;
   final double offset;
 
-  WaveAnimation({GlobalKey key, this.height, this.speed, this.offset = 0.0})
+  const WaveAnimation(
+      {GlobalKey key, this.height, this.speed, this.offset = 0.0})
       : super(key: key);
 
   @override
   void onPressed() {
     var state = cast<GlobalKey>(key).currentState;
-    return cast<WaveAnimationState>(state).onPressed();
+    return cast<_WaveAnimationState>(state).onPressed();
   }
 
   @override
-  WaveAnimationState createState() {
-    WaveAnimationState state = WaveAnimationState(
-      height: this.height,
-      speed: this.speed,
-      offset: this.offset,
-    );
+  _WaveAnimationState createState() {
+    _WaveAnimationState state = _WaveAnimationState();
 
     return state;
   }
 }
 
-class WaveAnimationState extends State<WaveAnimation>
+class _WaveAnimationState extends State<WaveAnimation>
     with SingleTickerProviderStateMixin {
-  final double height;
-  final double speed;
-  final double offset;
-
-  WaveAnimationState({this.height, this.speed, this.offset});
-
   AnimationController _controller;
   Animation<double> _animation;
 
@@ -48,7 +39,7 @@ class WaveAnimationState extends State<WaveAnimation>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: (5000 / speed).round()),
+      duration: Duration(milliseconds: (5000 / widget.speed).round()),
     )..addListener(() {
         setState(() {});
       });
@@ -57,8 +48,8 @@ class WaveAnimationState extends State<WaveAnimation>
 
   @override
   void dispose() {
-    super.dispose();
     _controller?.dispose();
+    super.dispose();
   }
 
   void onPressed() {
@@ -72,10 +63,11 @@ class WaveAnimationState extends State<WaveAnimation>
       builder: (BuildContext context, Widget child) {
         return LayoutBuilder(builder: (context, constraints) {
           return Container(
-            height: height,
+            height: widget.height,
             width: constraints.biggest.width,
             child: CustomPaint(
-              foregroundPainter: CurvePainter(_animation.value + offset),
+              foregroundPainter:
+                  _CurvePainter(_animation.value + widget.offset),
             ),
           );
         });
@@ -84,10 +76,10 @@ class WaveAnimationState extends State<WaveAnimation>
   }
 }
 
-class CurvePainter extends CustomPainter {
+class _CurvePainter extends CustomPainter {
   final double value;
 
-  CurvePainter(this.value);
+  const _CurvePainter(this.value);
 
   @override
   void paint(Canvas canvas, Size size) {

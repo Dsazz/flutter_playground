@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'base_animation.dart';
 
 class GrowAnimation extends StatefulWidget implements BaseAnimation {
-  GrowAnimation({GlobalKey key}) : super(key: key);
+  const GrowAnimation({GlobalKey key}) : super(key: key);
 
   @override
   void onPressed() {

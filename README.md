@@ -6,4 +6,10 @@ A new Flutter playground project.
 
 ## Demo
 
-![alt text](https://github.com/Dsazz/flutter_playground/blob/master/demo.gif)
+| Splash | Drawer |
+| ------------------ | --------------------------- |
+| <img src="./static/splashscreen.gif" height="480" alt="Screenshot"/>  | <img src="./static/drawer.gif" height="480" alt="Screenshot"/>  |
+
+| Animations | Loaders |
+| ------------------ | --------------------------- |
+| <img src="./static/animations.gif" height="480" alt="Screenshot"/>  | <img src="./static/loaders.gif" height="480" alt="Screenshot"/>  |

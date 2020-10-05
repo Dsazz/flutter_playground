@@ -13,3 +13,11 @@ double roundDouble(double value, int places) {
   double mod = pow(10.0, places);
   return ((value * mod).round().toDouble() / mod);
 }
+
+bool popAndPushNamedIfNotCurrent(BuildContext context, String route) {
+  if (ModalRoute.of(context).settings.name != route) {
+    Navigator.popAndPushNamed(context, route);
+    return true;
+  }
+  return false;
+}

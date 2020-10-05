@@ -1,13 +1,14 @@
 import 'dart:ui';
 
 import 'package:flatter_playground/service/audio_player.dart';
+import 'package:flatter_playground/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 typedef StarActionCallback = void Function(Offset currPnt, bool isForward);
 
 class AnimatedStarButton extends StatefulWidget {
-  static const KEY_PREFIX = "star_";
+  static const IDX_PREFIX = "star_";
 
   static const double SIZE = 46;
   static const double RADIUS = SIZE * 0.5;
@@ -15,31 +16,30 @@ class AnimatedStarButton extends StatefulWidget {
   static const double SHADOW_SHIFT = SIZE * 0.25;
 
   final Offset actionPoint;
-
-  StarActionCallback _tryDoAction;
+  final String index;
 
   void tryDoAction(Offset currPnt, bool isForward) {
-    if (_tryDoAction == null) {
+    var state = cast<GlobalKey>(key).currentState;
+    if (state == null) {
       return;
     }
-    return _tryDoAction(currPnt, isForward);
+
+    return cast<AnimatedStarButtonState>(state).tryDoAction(currPnt, isForward);
   }
 
-  AnimatedStarButton(int index, Offset actionPoint)
-      : this.actionPoint = actionPoint,
-        super(key: ValueKey(KEY_PREFIX + "$index"));
+  const AnimatedStarButton({GlobalKey key, int index, this.actionPoint})
+      : this.index = IDX_PREFIX + "$index",
+        super(key: key);
 
   @override
   AnimatedStarButtonState createState() {
-    AnimatedStarButtonState state = AnimatedStarButtonState(key, actionPoint);
-
-    _tryDoAction = state.tryDoAction;
+    AnimatedStarButtonState state = AnimatedStarButtonState();
 
     return state;
   }
 }
 
-class AnimatedStarButtonState extends State<StatefulWidget>
+class AnimatedStarButtonState extends State<AnimatedStarButton>
     with TickerProviderStateMixin {
   AudioPlayerController player = GetIt.I<AudioPlayerController>();
 
@@ -49,15 +49,9 @@ class AnimatedStarButtonState extends State<StatefulWidget>
   AnimationController btnController;
   Animation<double> btnAnimation;
 
-  ValueKey key;
-
-  Offset actionPoint;
   bool actionTaken = false;
 
-  AnimatedStarButtonState(ValueKey key, Offset actionPoint) {
-    this.actionPoint = actionPoint;
-    this.key = key;
-
+  AnimatedStarButtonState() {
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 10),
@@ -103,10 +97,10 @@ class AnimatedStarButtonState extends State<StatefulWidget>
     }
 
     bool isAfterCurrent = isForward
-        ? (currPnt.dx > actionPoint.dx)
-        : (currPnt.dx > 0 && ((currPnt.dx - actionPoint.dx) <= 0));
+        ? (currPnt.dx > widget.actionPoint.dx)
+        : (currPnt.dx > 0 && ((currPnt.dx - widget.actionPoint.dx) <= 0));
 
-    return currPnt == actionPoint || isAfterCurrent;
+    return currPnt == widget.actionPoint || isAfterCurrent;
   }
 
   void tryDoAction(Offset currPnt, bool isForward) {
@@ -116,7 +110,7 @@ class AnimatedStarButtonState extends State<StatefulWidget>
   }
 
   void _doAction(bool isForward) {
-    player.play(key.value);
+    player.play(widget.index);
 
     controller.reset();
     controller.forward();
@@ -200,7 +194,7 @@ class StarIcon extends StatelessWidget {
         const Positioned(
           top: AnimatedStarButton.SHADOW_SHIFT,
           left: AnimatedStarButton.SHADOW_SHIFT,
-          child: Icon(Icons.star, color: Colors.black38),
+          child: const Icon(Icons.star, color: Colors.black38),
         ),
         const Icon(Icons.star, color: Colors.orange),
       ],
