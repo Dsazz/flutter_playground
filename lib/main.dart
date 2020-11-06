@@ -1,12 +1,17 @@
+import 'package:flatter_playground/screen/settings/bloc/settings_bloc.dart';
+import 'package:flatter_playground/util/bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'config/locator.dart';
 import 'config/router.dart';
-import 'notifier/theme.dart';
+import 'lang/l10n_delegate.dart';
 
 void main() {
+  Bloc.observer = CustomBlocObserver();
+
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setEnabledSystemUIOverlays([]);
@@ -16,32 +21,41 @@ void main() {
 
   setupLocator();
 
-  runApp(MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<SettingsBloc>(
+          create: (context) => SettingsBloc(),
+        ),
+      ],
+      child: App(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      //Here we provide our ThemeNotifier to child widget tree
-      create: (_) => ThemeNotifier(),
-
-      //Consumer will call builder method each time ThemeNotifier
-      //calls notifyListeners()
-      child: Consumer<ThemeNotifier>(builder: (context, themeNotifier, _) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: themeNotifier.getTheme(),
-          title: 'Playground application',
-          initialRoute: Routers.SPLASH_SCREEN,
-          routes: Routers.init(context),
-        );
-      }),
-    );
+    return BlocBuilder<SettingsBloc, SettingsState>(
+        builder: (context, settingsState) {
+      return MaterialApp(
+        localizationsDelegates: [
+          const L10nDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en'),
+          const Locale('us'),
+          const Locale('ru'),
+          const Locale('ua'),
+        ],
+        debugShowCheckedModeBanner: false,
+        theme: settingsState.data.theme,
+        title: 'Playground application',
+        initialRoute: Routers.SPLASH_SCREEN,
+        routes: Routers.init(context),
+      );
+    });
   }
 }

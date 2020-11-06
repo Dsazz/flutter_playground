@@ -1,5 +1,4 @@
-import 'package:flatter_playground/screen/home/home.dart';
-import 'package:flatter_playground/screen/home/loaders.dart';
+import 'package:flatter_playground/screen/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:your_splash/your_splash.dart';
 
@@ -7,6 +6,8 @@ class Routers {
   static const String SPLASH_SCREEN = '/';
   static const String HOME = '/home';
   static const String LOADERS = '/loaders';
+  static const String WEATHER = '/weather';
+  static const String SETTINGS = '/settings';
 
   static Map<String, WidgetBuilder> init(BuildContext context) {
     return {
@@ -39,6 +40,8 @@ class Routers {
           ),
       HOME: (context) => Home(),
       LOADERS: (context) => const Loaders(),
+      WEATHER: (context) => Weather(),
+      SETTINGS: (context) => Settings(),
     };
   }
 }

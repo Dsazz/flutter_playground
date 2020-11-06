@@ -1,6 +1,6 @@
 import 'package:flatter_playground/component/rerunnable_future.dart';
 import 'package:flatter_playground/component/scaffold/start_drawer.dart';
-import 'package:flatter_playground/component/scaffold/switch_theme_button.dart';
+import 'package:flatter_playground/lang/l10n.dart';
 import 'package:flutter/material.dart';
 
 Future asyncData() async {
@@ -16,9 +16,8 @@ class Loaders extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: StartDrawer(),
-      appBar: AppBar(title: const Text("LOADERS")),
+      appBar: AppBar(title: Text(L10n.of(context).loaders.toUpperCase())),
       body: const ReRunnableFutureWidget(future: asyncData),
-      floatingActionButton: const SwitchThemeButton(),
     );
   }
 }

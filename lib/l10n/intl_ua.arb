@@ -1,0 +1,87 @@
+{
+  "@@last_modified": "2020-10-26T16:22:06.868016",
+  "loaders": "Завантажники",
+  "@loaders": {
+    "description": "Title for the Loader screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "weather": "Погода",
+  "@weather": {
+    "description": "Title for the Weather screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "Налаштування",
+  "@settings": {
+    "description": "Title for the Setting screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "about": "Про додаток",
+  "@about": {
+    "description": "Title for the About screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "animations": "Анімації",
+  "@animations": {
+    "description": "Title for the Animation screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "Мова",
+  "@language": {
+    "description": "Title for the language settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "darkMode": "Темний режим",
+  "@darkMode": {
+    "description": "Title for the Dark Mode settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "on": "Ввімкнено",
+  "@on": {
+    "description": "Subtitle for the enabled settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "off": "Вимкнуто",
+  "@off": {
+    "description": "Subtitle for the disabled settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ru": "Російська",
+  "@ru": {
+    "description": "Title for Russian lang",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ua": "Українська",
+  "@ua": {
+    "description": "Title for Ukrainian lang",
+    "type": "text",
+    "placeholders": {}
+  },
+  "en": "Англійська",
+  "@en": {
+    "description": "Title for English lang",
+    "type": "text",
+    "placeholders": {}
+  },
+  "us": "Англійська",
+  "@us": {
+    "description": "Title for English lang",
+    "type": "text",
+    "placeholders": {}
+  },
+  "en": "Англійська (UK)",
+  "@en": {
+    "description": "Title for English (Britain) lang",
+    "type": "text",
+    "placeholders": {}
+  }
+}

@@ -34,6 +34,8 @@ class PathMetricHelper {
 
       countedLength = nextLength;
     }
+
+    return Offset.zero;
   }
 
   static Path createAnimatedPath(

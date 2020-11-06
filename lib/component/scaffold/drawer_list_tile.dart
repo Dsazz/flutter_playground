@@ -6,7 +6,7 @@ class DrawerListTile extends StatelessWidget {
   final String title;
   final String route;
 
-  const DrawerListTile(this.icon, this.title, this.route);
+  DrawerListTile(this.icon, this.title, this.route);
 
   @override
   Widget build(BuildContext context) {

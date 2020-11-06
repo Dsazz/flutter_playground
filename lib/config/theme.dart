@@ -6,7 +6,7 @@ final darkTheme = ThemeData(
     brightness: Brightness.dark,
     backgroundColor: const Color(0xFF212121),
     accentColor: Colors.white,
-    // shadowColor: Colors.white,
+    shadowColor: Colors.white,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
@@ -19,10 +19,10 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   backgroundColor: const Color(0xFFE5E5E5),
   accentColor: Colors.black,
-  // shadowColor: Colors.black,
+  shadowColor: Colors.black,
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: Colors.black,
     foregroundColor: Colors.white,
   ),
-  dividerTheme: DividerThemeData(color: Colors.black12, thickness: 2),
+  dividerTheme: const DividerThemeData(color: Colors.black12, thickness: 2),
 );

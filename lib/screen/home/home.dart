@@ -1,14 +1,9 @@
 import 'package:flatter_playground/component/scaffold/start_drawer.dart';
-import 'package:flatter_playground/component/scaffold/switch_theme_button.dart';
+import 'package:flatter_playground/lang/l10n.dart';
 import 'package:flatter_playground/screen/home/tab_item.dart';
 import 'package:flutter/material.dart';
 
-import 'animation/ghost.dart';
-import 'animation/grow.dart';
-import 'animation/opacity.dart';
-import 'animation/rotate.dart';
-import 'animation/star_buttons.dart';
-import 'animation/wave.dart';
+import 'animation/animations.dart';
 
 class Home extends StatelessWidget {
   final tabAnimations = <StatefulWidget>[
@@ -23,7 +18,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: StartDrawer(),
-      appBar: AppBar(title: const Text("ANIMATIONS")),
+      appBar: AppBar(title: Text(L10n.of(context).animations.toUpperCase())),
       body: Container(
         child: ListView.separated(
           itemBuilder: (context, index) => Container(
@@ -34,7 +29,6 @@ class Home extends StatelessWidget {
           itemCount: tabAnimations.length,
         ),
       ),
-      floatingActionButton: const SwitchThemeButton(),
     );
   }
 }
